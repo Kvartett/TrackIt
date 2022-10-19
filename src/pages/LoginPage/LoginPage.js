@@ -7,7 +7,7 @@ export default function Login() {
         <PageContainer>
             <Logo />
             <LoginForm />
-            <p>Não tem uma conta? Cadastre-se!</p>
+            <p>Create an account!</p>
         </PageContainer>
     )
 }

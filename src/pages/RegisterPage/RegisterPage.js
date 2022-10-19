@@ -7,7 +7,7 @@ export default function RegisterPage() {
         <PageContainer>
             <Logo />
             <RegisterForm />
-            <p>Já tem uma conta? Faça login!</p>
+            <p>I already have an account, Log in</p>
         </PageContainer>
     )
 }

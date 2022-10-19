@@ -1,3 +1,9 @@
+import NavBar from "../../components/NavBar";
+
 export default function HistoricPage() {
-    return (<>Aqui sera o historico</>)
+    return (
+        <>
+            <NavBar />
+            Aqui sera o historico
+        </>)
 }

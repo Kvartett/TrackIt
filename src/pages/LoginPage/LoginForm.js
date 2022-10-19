@@ -3,9 +3,9 @@ import styled from "styled-components"
 export default function LoginForm() {
     return (
         <Form>
-            <input name="email" placeholder="email" type="email" />
-            <input name="password" placeholder="password" type="password" />
-            <button type="submit">Login</button>
+            <input name="email" placeholder="Email" type="email" />
+            <input name="password" placeholder="Password" type="password" />
+            <button type="submit">Log in</button>
         </Form>
     )
 }
