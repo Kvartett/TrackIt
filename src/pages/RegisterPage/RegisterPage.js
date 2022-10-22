@@ -1,13 +1,20 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import Logo from "../../components/Logo"
 import RegisterForm from "./RegisterForm"
 
 export default function RegisterPage() {
+    const navigate = useNavigate()
+
+    function goToLogin() {
+        navigate("/")
+    }
+
     return (
         <PageContainer>
             <Logo />
             <RegisterForm />
-            <p>I already have an account, Log in</p>
+            <p onClick={goToLogin} >I already have an account, Log in</p>
         </PageContainer>
     )
 }
@@ -17,7 +24,7 @@ const PageContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 140px auto;
+    margin: 100px auto;
     p {
         font-family: 'Lexend Deca';
         font-style: normal;

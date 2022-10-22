@@ -1,12 +1,37 @@
+import axios from "axios"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { BASE_URL } from "../../constants/urls"
 
 export default function RegisterForm() {
+    const [form, setForm] = useState({ email: "", name: "", image: "", password: "" })
+    const navigate = useNavigate()
+
+    function handleForm(e) {
+        const { name, value } = e.target
+        setForm({ ...form, [name]: value })
+    }
+
+    function sendRegister(e) {
+        e.preventDefault()
+
+        const body = { ...form }
+        console.log(body)
+
+        axios.post(`${BASE_URL}/auth/sign-up`, body)
+            .then(res => {
+                navigate("/")
+            })
+            .catch(err => { alert(err.response.data.message); console.log(err.response.data) })
+    }
+
     return (
-        <Form>
-            <input name="email" placeholder="Email" type="email" />
-            <input name="password" placeholder="Password" type="password" />
-            <input name="name" placeholder="Name" type="text" />
-            <input name="image" placeholder="Image" type="text" />
+        <Form onSubmit={sendRegister}>
+            <input name="email" value={form.email} onChange={handleForm} placeholder="Email" type="email" required />
+            <input name="password" value={form.password} onChange={handleForm} placeholder="Password" type="password" required />
+            <input name="name" value={form.name} onChange={handleForm} placeholder="Name" type="text" required />
+            <input name="image" value={form.image} onChange={handleForm} placeholder="Image" type="text" required />
             <button type="submit">Create Account</button>
         </Form>
     )
