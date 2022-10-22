@@ -17,13 +17,12 @@ export default function RegisterForm() {
         e.preventDefault()
 
         const body = { ...form }
-        console.log(body)
 
         axios.post(`${BASE_URL}/auth/sign-up`, body)
             .then(res => {
                 navigate("/")
             })
-            .catch(err => { alert(err.response.data.message); console.log(err.response.data) })
+            .catch(err => alert(err.response.data.message))
     }
 
     return (

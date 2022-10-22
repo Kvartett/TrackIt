@@ -1,10 +1,13 @@
 import styled from "styled-components"
+import { useAuth } from "../providers/auth"
 
 export default function NavBar() {
+    const { user } = useAuth()
+
     return (
         <NavContainer>
             <p>TrackIt</p>
-            <img src="https://mod.go.ke/wp-content/uploads/2021/04/default-profile-pic.png" />
+            <img src={`${(user.image === "") ? "https://mod.go.ke/wp-content/uploads/2021/04/default-profile-pic.png" : user.image}`} />
         </NavContainer>
     )
 }

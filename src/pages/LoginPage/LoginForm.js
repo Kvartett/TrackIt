@@ -1,10 +1,41 @@
+import { useState } from "react"
 import styled from "styled-components"
+import axios from "axios"
+import { BASE_URL } from "../../constants/urls"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../providers/auth"
+
 
 export default function LoginForm() {
+    const { setUser } = useAuth()
+    const [isDisable, setIsDisabled] = useState(false)
+    const [form, setForm] = useState({ email: "", password: "" })
+    const navigate = useNavigate()
+
+    function handleForm(e) {
+        const { name, value } = e.target
+        setForm({ ...form, [name]: value })
+    }
+
+    function logIn(e) {
+        e.preventDefault()
+
+        const body = { ...form }
+        setIsDisabled(!isDisable)
+
+        const promise = axios.post(`${BASE_URL}/auth/login`, body)
+        promise.then(res => {
+            setUser(res.data)
+            navigate("/today")
+        })
+
+        promise.catch(err => alert(err.response.data))
+    }
+
     return (
-        <Form>
-            <input name="email" placeholder="Email" type="email" />
-            <input name="password" placeholder="Password" type="password" />
+        <Form onSubmit={logIn}>
+            <input disabled={isDisable} name="email" value={form.email} onChange={handleForm} placeholder="Email" type="email" />
+            <input disabled={isDisable} name="password" value={form.password} onChange={handleForm} placeholder="Password" type="password" />
             <button type="submit">Log in</button>
         </Form>
     )
@@ -17,7 +48,7 @@ const Form = styled.form`
     align-items: flex-start;
     margin-top: 35px;
     input {
-        background-color: #FFFFFF;
+        background-color: ${(props) => props.disabled === true ? "#DCDCDC" : "#FFFFFF"};
         width: 305px;
         height: 45px;
         margin-bottom: 10px;
