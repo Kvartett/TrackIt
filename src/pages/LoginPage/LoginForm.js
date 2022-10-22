@@ -29,7 +29,7 @@ export default function LoginForm() {
             navigate("/today")
         })
 
-        promise.catch(err => alert(err.response.data))
+        promise.catch(err => alert(err.response.data.message))
     }
 
     return (
