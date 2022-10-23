@@ -1,33 +1,16 @@
-import axios, { Axios } from "axios"
-import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { BASE_URL } from "../../constants/urls"
-import WEEKDAYS from "../../constants/weekdays"
-import { useAuth } from "../../providers/auth"
 import Habit from "./Habit"
 
-
 export default function Habits(props) {
-    const { habits, setHabits } = props
-    const { config } = useAuth()
+    const { reloadHabits, habits } = props
 
-    useEffect(() => {
-        axios.get(`${BASE_URL}/habits`, config)
-            .then(res => setHabits(res.data))
-            .catch(err => console.log(err.response.data))
-    }, [])
-
-    if (!habits) {
-        return (
-            <NoHabit>
-                You don't have any habits registered yet. Add a habit to start tracking!
-            </NoHabit>
-        )
+    if (habits === undefined || habits.length === 0) {
+        return <NoHabit>You don't have any habits registered yet. Add a habit to start tracking!</NoHabit>
     }
 
     return (
         <HabitsContainer>
-            {habits.map((habit) => <Habit habit={habit} key={habit.id} />)}
+            {habits.map((habit) => <Habit reloadHabits={reloadHabits} habit={habit} key={habit.id} />)}
         </HabitsContainer>
     )
 }

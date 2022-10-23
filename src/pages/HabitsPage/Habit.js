@@ -1,9 +1,12 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import WEEKDAYS from "../../constants/weekdays"
+import { BASE_URL } from "../../constants/urls"
+import { useAuth } from "../../providers/auth"
 
 export default function Habit(props) {
-    const { habit } = props
+    const { habit, reloadHabits } = props
+    const { config } = useAuth()
     const [habitDay, setHabitDay] = useState([
         { day: 7, status: "unselected", weekday: "Sunday", initials: "S" },
         { day: 1, status: "unselected", weekday: "Monday", initials: "M" },
@@ -25,7 +28,19 @@ export default function Habit(props) {
         setHabitDay(selectedHabitDay)
     }, [])
 
-    console.log(habit)
+    function confirmDelete() {
+        if (window.confirm("Are you sure you want to delete the habit?")) {
+            deleteHabit()
+        }
+    }
+
+    function deleteHabit() {
+        axios.delete(`${BASE_URL}/habits/${habit.id}`, config)
+            .then(res => {
+                reloadHabits()
+            })
+            .catch(err => alert(err.response.data.message))
+    }
 
     return (
         <HabitContainer>
@@ -33,7 +48,7 @@ export default function Habit(props) {
             <ButtonsContainer >
                 {habitDay.map((w, i) => <button className={w.status} key={i} >{w.initials}</button>)}
             </ButtonsContainer>
-            <ion-icon name="trash-bin-outline"></ion-icon>
+            <ion-icon onClick={confirmDelete} name="trash-bin-outline"></ion-icon>
         </HabitContainer>
     )
 }
@@ -54,7 +69,7 @@ const HabitContainer = styled.li`
         color: #666666;
     }
     ion-icon {
-        font-size: 18px;
+        font-size: 27px;
         position: absolute;
         top: 12px;
         right: 10px;
@@ -80,6 +95,8 @@ const ButtonsContainer = styled.div`
     }
     .selected {
         background-color: #52B6FF;
+        color: #000000;
+        font-weight: 600;
     }
     .unselected {
         background-color: #FFFFFF;

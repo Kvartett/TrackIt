@@ -10,7 +10,7 @@ export default function CreateHabit(props) {
     const { user } = useAuth()
     const [selectedDays, setSelectedDays] = useState([])
     const [habit, setHabit] = useState({ name: "" })
-    const { addHabit, setAddHabit } = props
+    const { addHabit, setAddHabit, reloadHabits } = props
 
     function handleHabit(e) {
         const { value } = e.target
@@ -33,13 +33,13 @@ export default function CreateHabit(props) {
                 ...habit,
                 days: selectedDays.map(s => s)
             }
-            console.log(body)
 
             axios.post(`${BASE_URL}/habits`, body, config)
                 .then(res => {
                     setHabit("")
                     setSelectedDays([])
                     setAddHabit(false)
+                    reloadHabits()
                 })
                 .catch(err => alert(err.response.data.message))
         }
