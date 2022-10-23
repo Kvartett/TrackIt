@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styled from "styled-components"
 import Footer from "../../components/Footer"
 import NavBar from "../../components/NavBar"
@@ -5,22 +6,24 @@ import AddHabits from "./AddHabits"
 import Habits from "./Habits"
 
 export default function HabitsPage() {
+    const [habits, setHabits] = useState(undefined)
+
     return (
         <>
             <NavBar />
-            <Content>
+            <ContentContainer>
                 <AddHabits />
-                <Habits />
-            </Content>
+                <Habits habits={habits} setHabits={setHabits} />
+            </ContentContainer>
             <Footer />
         </>
     )
 }
 
-const Content = styled.div`
+const ContentContainer = styled.div`
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background-color: #f3f3f3;
-    padding: 90px 12px 0 12px;
+    padding: 90px 17px 110px 17px;
     box-sizing: border-box;
 `

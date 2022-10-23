@@ -1,14 +1,21 @@
+import { useState } from "react"
 import styled from "styled-components"
 import CreateHabit from "./CreateHabit"
 
 export default function AddHabits() {
+    const [addHabit, setAddHabit] = useState(false)
+
+    function goToCreateHabit() {
+        setAddHabit(true)
+    }
+
     return (
         <AddHabitsContainer>
             <AddContainer>
                 <p>My Habits</p>
-                <button>+</button>
+                <button onClick={goToCreateHabit}>+</button>
             </AddContainer>
-            <CreateHabit />
+            <CreateHabit addHabit={addHabit} setAddHabit={setAddHabit} />
         </AddHabitsContainer>
     )
 }

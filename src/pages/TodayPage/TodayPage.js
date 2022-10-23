@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
+import signal from "../../assets/images/signal.png"
 
 export default function TodayPage() {
     return (
@@ -17,6 +18,7 @@ export default function TodayPage() {
                         <p>Your record: 5 days</p>
                     </DayHabit>
                     <Retangle>
+                        <img src={signal} />
                     </Retangle>
                 </DayHabitContainer>
             </ContentContainer>
@@ -25,9 +27,9 @@ export default function TodayPage() {
 }
 
 const ContentContainer = styled.div`
-    height: 100vh;
+    height: 100%;
     background-color: #f3f3f3;
-    padding: 90px 17px 100px 17px;
+    padding: 90px 17px 110px 17px;
     h2 {
         font-style: normal;
         font-weight: 400;
@@ -81,4 +83,7 @@ const Retangle = styled.div`
     border: 1px solid #E7E7E7;
     border-radius: 5px;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

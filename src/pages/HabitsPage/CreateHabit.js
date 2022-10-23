@@ -1,23 +1,65 @@
+import axios from "axios"
+import { useState } from "react"
 import styled from "styled-components"
+import { BASE_URL } from "../../constants/urls"
+import WEEKDAYS from "../../constants/weekdays"
+import { useAuth } from "../../providers/auth"
+import DayButton from "./DayButton"
 
-export default function CreateHabit() {
+export default function CreateHabit(props) {
+    const { user } = useAuth()
+    const [selectedDays, setSelectedDays] = useState([])
+    const [habit, setHabit] = useState({ name: "" })
+    const { addHabit, setAddHabit } = props
+
+    function handleHabit(e) {
+        const { value } = e.target
+        setHabit({ ...habit, name: value })
+    }
+
+    function sendHabit() {
+        if (habit.name.length === 0) {
+            alert("Give a name for your habit")
+        } else if (selectedDays.length === 0) {
+            alert("Select at least one day")
+        } else {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+
+            const body = {
+                ...habit,
+                days: selectedDays.map(s => s)
+            }
+            console.log(body)
+
+            axios.post(`${BASE_URL}/habits`, body, config)
+                .then(res => {
+                    setHabit("")
+                    setSelectedDays([])
+                    setAddHabit(false)
+                })
+                .catch(err => alert(err.response.data.message))
+        }
+    }
+
+
+    if (addHabit === false) {
+        return (<></>)
+    }
+
     return (
         <CreateHabitContainer>
-            <input type="text" placeholder="Habit name" />
-            <ButtonsContainer>
-                <button>S</button>
-                <button>M</button>
-                <button>T</button>
-                <button>W</button>
-                <button>T</button>
-                <button>F</button>
-                <button>S</button>
-            </ButtonsContainer>
+            <input type="text" value={habit.name} onChange={handleHabit} placeholder="Habit name" />
+            <DayButtons>
+                {WEEKDAYS.map(({ day, initials }, i) => <DayButton selectedDays={selectedDays} setSelectedDays={setSelectedDays} day={day} initials={initials} key={i} />)}
+            </DayButtons>
             <DecisionButtons>
-                <CancelButton>Cancel</CancelButton>
-                <SaveButton>Save</SaveButton>
+                <CancelButton onClick={() => setAddHabit(false)}>Cancel</CancelButton>
+                <SaveButton onClick={sendHabit}>Save</SaveButton>
             </DecisionButtons>
-
         </CreateHabitContainer>
     )
 }
@@ -48,24 +90,8 @@ const CreateHabitContainer = styled.div`
     }
 `
 
-const ButtonsContainer = styled.div`
+const DayButtons = styled.div`
     display: flex;
-    justify-content: initial;
-    align-items: center;
-    margin-top: 8px;
-    button {
-        width: 30px;
-        height: 30px;
-        background-color: #FFFFFF;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-        box-sizing: border-box;
-        margin: 0 1.8px;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 20px;
-        color: #DBDBDB;
-    }
 `
 
 const DecisionButtons = styled.div`

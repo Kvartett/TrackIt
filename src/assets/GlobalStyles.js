@@ -34,6 +34,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 	font-family: 'Lexend Deca';
+	background-color: #f3f3f3;
 }
 ol, ul {
 	list-style: none;

@@ -19,11 +19,12 @@ export default function Login() {
     )
 }
 const PageContainer = styled.div`
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 100px auto;
+    background-color: #ffffff;
     p {
         font-family: 'Lexend Deca';
         font-style: normal;

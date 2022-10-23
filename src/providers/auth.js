@@ -12,8 +12,14 @@ export const AuthProvider = (props) => {
         token: ""
     })
 
+    const config = {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, config }}>
             {props.children}
         </AuthContext.Provider>
     )
