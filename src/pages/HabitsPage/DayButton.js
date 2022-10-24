@@ -1,6 +1,5 @@
 import { useState } from "react"
 import styled from "styled-components"
-import WEEKDAYS from "../../constants/weekdays"
 
 export default function DayButtons(props) {
     const { selectedDays, setSelectedDays, day, initials } = props

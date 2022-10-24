@@ -6,10 +6,8 @@ import TodayPage from "./pages/TodayPage/TodayPage"
 import HistoricPage from "./pages/HistoricPage/HistoricPage"
 import GlobalStyle from "./assets/GlobalStyles"
 import React from "react"
-import { useAuth } from "./providers/auth"
 
 export default function App() {
-  const { user, setUser } = useAuth()
 
   return (
     <BrowserRouter>

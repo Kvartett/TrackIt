@@ -41,6 +41,10 @@ const AddContainer = styled.div`
         color: #126BA5;
     }
     button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
         background-color: #52B6FF;
         width: 40px;
         height: 35px;
