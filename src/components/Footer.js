@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { CircularProgressbar } from "react-circular-progressbar"
+import "react-circular-progressbar/dist/styles.css"
+import { useAuth } from "../providers/auth"
 
 export default function Footer() {
     const navigate = useNavigate()
+    const { percentage } = useAuth()
 
     function goToHabits() {
         navigate("/habits")
@@ -19,7 +23,30 @@ export default function Footer() {
     return (
         <FooterContainer>
             <p onClick={goToHabits}>Habits</p>
-            <div onClick={goToToday}>Hoje</div>
+            <span onClick={goToToday} className="progress-bar">
+                <CircularProgressbar
+                    value={percentage}
+                    text={"Hoje"}
+                    background
+                    backgroundPadding={6}
+                    styles={{
+                        path: {
+                            stroke: `#FFFFFF`,
+                            strokeLinecap: "round",
+                        },
+                        trail: {
+                            stroke: "#52B6FF",
+                        },
+                        text: {
+                            fill: "#FFFFFF",
+                            fontSize: "18px",
+                        },
+                        background: {
+                            fill: "#52B6FF",
+                        },
+                    }}
+                />
+            </span>
             <p onClick={goToHistoric}>Historic</p>
         </FooterContainer>
     )
@@ -45,20 +72,9 @@ const FooterContainer = styled.div`
         line-height: 22px;
         color: #52B6FF;
     }
-    div {
+    .progress-bar {
         width: 91px;
         height: 91px;
-        background-color: #52B6FF;
-        border-radius: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
         margin-bottom: 40px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        color: #FFFFFF;
     }
 ` 
