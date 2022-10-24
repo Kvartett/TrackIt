@@ -1,5 +1,4 @@
 import axios from "axios"
-import { useState } from "react"
 import styled from "styled-components"
 import signal from "../../assets/images/signal.png"
 import { BASE_URL } from "../../constants/urls"
@@ -8,7 +7,6 @@ import { useAuth } from "../../providers/auth"
 export default function DayHabit(props) {
     const { config } = useAuth()
     const { habit, reloadTodayHabits } = props
-    const [check, setcheck] = useState(false)
 
     function markCheck() {
         if (habit.done) {
