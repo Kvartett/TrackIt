@@ -31,6 +31,10 @@ const ButtonContainer = styled.div`
     align-items: center;
     margin-top: 8px;
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
         width: 30px;
         height: 30px;
         background-color: ${props => (props.selected === false) ? "#FFFFFF" : "#52B6FF"};
