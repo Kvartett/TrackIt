@@ -39,9 +39,9 @@ const ButtonContainer = styled.div`
         border-radius: 5px;
         box-sizing: border-box;
         margin: 0 1.8px;
-        font-weight: 400;
+        font-weight: ${props => (props.selected === false) ? "400" : "600"};
         font-size: 18px;
         line-height: 20px;
-        color: #DBDBDB;
+        color: ${props => (props.selected === false) ? "#DBDBDB" : "#000000"};
     }
 `

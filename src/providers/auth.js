@@ -12,6 +12,8 @@ export const AuthProvider = (props) => {
         token: ""
     })
 
+    const [percentage, setPercentage] = useState()
+
     const config = {
         headers: {
             Authorization: `Bearer ${user.token}`
@@ -19,7 +21,7 @@ export const AuthProvider = (props) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, setUser, config }}>
+        <AuthContext.Provider value={{ user, setUser, config, percentage, setPercentage }}>
             {props.children}
         </AuthContext.Provider>
     )

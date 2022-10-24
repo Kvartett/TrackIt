@@ -85,7 +85,7 @@ const CreateHabitContainer = styled.div`
         font-weight: 400;
         font-size: 20px;
         line-height: 25px;
-        color: #DBDBDB;
+        color: #808080;
         padding-left: 11px;
     }
 `

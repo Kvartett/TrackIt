@@ -8,7 +8,7 @@ export default function Habit(props) {
     const { habit, reloadHabits } = props
     const { config } = useAuth()
     const [habitDay, setHabitDay] = useState([
-        { day: 7, status: "unselected", weekday: "Sunday", initials: "S" },
+        { day: 0, status: "unselected", weekday: "Sunday", initials: "S" },
         { day: 1, status: "unselected", weekday: "Monday", initials: "M" },
         { day: 2, status: "unselected", weekday: "Tuesday", initials: "T" },
         { day: 3, status: "unselected", weekday: "Wednesday", initials: "W" },

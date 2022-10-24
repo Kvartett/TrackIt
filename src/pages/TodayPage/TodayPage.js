@@ -1,26 +1,80 @@
-import styled from "styled-components";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavBar";
-import signal from "../../assets/images/signal.png"
+import styled from "styled-components"
+import Footer from "../../components/Footer"
+import NavBar from "../../components/NavBar"
+import DayHabit from "./DayHabit"
+import dayjs from "dayjs"
+import "dayjs/locale/en-au"
+import { useAuth } from "../../providers/auth"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { BASE_URL } from "../../constants/urls"
+
 
 export default function TodayPage() {
+    const { user, config, percentage, setPercentage } = useAuth()
+    const navigate = useNavigate()
+    const [date, setDate] = useState("")
+    const [todayHabits, setTodayHabits] = useState([])
+
+    useEffect(() => {
+        if (user.token === "") {
+            navigate("/")
+        } else {
+            setDate(getDate)
+            getTodayHabits()
+        }
+    }, [])
+
+    useEffect(() => {
+        checkPercentage()
+    }, [todayHabits])
+
+    function getDate() {
+        return dayjs().locale("pt-br").format("dddd, DD/MM");
+    }
+
+    function getTodayHabits() {
+        axios.get(`${BASE_URL}/habits/today`, config)
+            .then(res => setTodayHabits(res.data))
+            .catch(err => alert(err.response.data.message))
+    }
+
+    function reloadTodayHabits() {
+        getTodayHabits()
+    }
+
+
+
+    function checkPercentage() {
+        const totalHabitsToday = todayHabits.length
+        let checkHabits = 0;
+        let todayPercentage = 0;
+        todayHabits.forEach((habit) => {
+            if (habit.done) {
+                checkHabits++
+            }
+        })
+        if (totalHabitsToday > 0) {
+            todayPercentage = Math.floor((checkHabits / totalHabitsToday) * 100)
+        }
+        if (todayPercentage !== percentage) setPercentage(todayPercentage)
+    }
+
+    function getPercentage() {
+        return (percentage === 0) ? <p>Nenhum hábito concluido ainda</p> : <p>{percentage}% dos hábitos concluídos</p>
+    }
+
+    const subtitle = getPercentage()
+
     return (
         <>
             <NavBar />
             <Footer />
             <ContentContainer>
-                <h2>Monday, 17/10</h2>
-                <p>Nenhum hábito concluido ainda</p>
-                <DayHabitContainer>
-                    <DayHabit>
-                        <h3>Read a book</h3>
-                        <p>Atual sequency: 3 days</p>
-                        <p>Your record: 5 days</p>
-                    </DayHabit>
-                    <Retangle>
-                        <img src={signal} />
-                    </Retangle>
-                </DayHabitContainer>
+                <h2>{date}</h2>
+                {subtitle}
+                {todayHabits.map((habit) => <DayHabit reloadTodayHabits={reloadTodayHabits} habit={habit} key={habit.id} />)}
             </ContentContainer>
         </>
     )
@@ -44,46 +98,4 @@ const ContentContainer = styled.div`
         line-height: 22px;
         color: #BABABA;
     }
-`
-
-const DayHabitContainer = styled.div`
-    width: 340px;
-    height: 94px;
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    padding: 13px;
-    box-sizing: border-box;
-    margin-top: 28px;
-    display: flex;
-    justify-content: space-between;
-`
-
-const DayHabit = styled.div`
-    h3 {
-        display: inline-block;
-        height: 30px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 19.976px;
-        line-height: 25px;
-        color: #666666;
-    }
-    p {
-        font-weight: 400;
-        font-size: 12.976px;
-        line-height: 16px;
-        color: #666666;
-    }
-`
-
-const Retangle = styled.div`
-    background-color: #E7E7E7;
-    width: 69px;
-    height: 69px;
-    border: 1px solid #E7E7E7;
-    border-radius: 5px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `
