@@ -25,7 +25,9 @@ export default function DayHabit(props) {
     return (
         <DayHabitContainer>
             <TodayHabit>
-                <h3>{habit.name}</h3>
+                <div>
+                    <h3>{habit.name}</h3>
+                </div>
                 <p>Current Sequence {habit.currentSequence}</p>
                 <p>Highest Sequence {habit.highestSequence}</p>
             </TodayHabit>
@@ -38,7 +40,7 @@ export default function DayHabit(props) {
 
 const DayHabitContainer = styled.div`
     width: 340px;
-    height: 94px;
+    height: 100%;
     background-color: #FFFFFF;
     border-radius: 5px;
     padding: 13px;
@@ -50,8 +52,10 @@ const DayHabitContainer = styled.div`
 
 const TodayHabit = styled.div`
     h3 {
-        display: inline-block;
-        height: 30px;
+        word-wrap: break-word;
+        display: block;
+        width: 220px;
+        height: 100%;
         font-style: normal;
         font-weight: 400;
         font-size: 19.976px;

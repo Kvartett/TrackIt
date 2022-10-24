@@ -57,7 +57,7 @@ export default function CreateHabit(props) {
         return isLoading ? (
             <input type="text" value={habit.name} placeholder="Habit name" disabled />
         ) : (
-            <input type="text" value={habit.name} onChange={handleHabit} placeholder="Habit name" />
+            <input type="text" maxlength="20" value={habit.name} onChange={handleHabit} placeholder="Habit name" />
         )
     }
 

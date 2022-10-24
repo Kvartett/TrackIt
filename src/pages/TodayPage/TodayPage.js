@@ -59,7 +59,7 @@ export default function TodayPage() {
     }
 
     function getPercentage() {
-        return (percentage === 0) ? <p>Nenhum hábito concluido ainda</p> : <p>{percentage}% dos hábitos concluídos</p>
+        return (percentage === 0) ? <p>No habits completed yet</p> : <p>{percentage}% of habits completed</p>
     }
 
     const subtitle = getPercentage()
@@ -78,6 +78,7 @@ export default function TodayPage() {
 }
 
 const ContentContainer = styled.div`
+    width: 100vw;
     height: 100%;
     background-color: #f3f3f3;
     padding: 90px 17px 110px 17px;

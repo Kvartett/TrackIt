@@ -56,15 +56,17 @@ export default function Habit(props) {
 const HabitContainer = styled.li`
     background-color: #FFFFFF;
     width: 340px;
-    height: 91px;
+    height: 100%;
     padding: 15px;
     margin-bottom: 20px;
     box-sizing: border-box;
     border-radius: 5px;
     position: relative;
     p {
+        display: block;
+        width: 270px;
         font-weight: 400;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 25px;
         color: #666666;
     }

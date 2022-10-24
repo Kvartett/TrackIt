@@ -25,6 +25,7 @@ const NavContainer = styled.div`
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 5;
     p {
         font-family: 'playball';
         font-style: normal;
