@@ -3,7 +3,7 @@ import styled from "styled-components"
 import CreateHabit from "./CreateHabit"
 
 export default function AddHabits(props) {
-    const { reloadHabits } = props
+    const { reloadHabits, isLoading, setIsLoading } = props
     const [addHabit, setAddHabit] = useState(false)
 
     function goToCreateHabit() {
@@ -16,7 +16,7 @@ export default function AddHabits(props) {
                 <p>My Habits</p>
                 <button onClick={goToCreateHabit}>+</button>
             </AddContainer>
-            <CreateHabit reloadHabits={reloadHabits} addHabit={addHabit} setAddHabit={setAddHabit} />
+            <CreateHabit reloadHabits={reloadHabits} addHabit={addHabit} setAddHabit={setAddHabit} isLoading={isLoading} setIsLoading={setIsLoading} />
         </AddHabitsContainer>
     )
 }

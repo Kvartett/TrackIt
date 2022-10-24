@@ -4,11 +4,13 @@ import axios from "axios"
 import { BASE_URL } from "../../constants/urls"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../providers/auth"
+import { ThreeDots } from "react-loader-spinner"
 
 
 export default function LoginForm() {
     const { setUser } = useAuth()
     const [isDisable, setIsDisabled] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [form, setForm] = useState({ email: "", password: "" })
     const navigate = useNavigate()
 
@@ -19,6 +21,7 @@ export default function LoginForm() {
 
     function logIn(e) {
         e.preventDefault()
+        setIsLoading(true)
 
         const body = { ...form }
         setIsDisabled(!isDisable)
@@ -29,14 +32,25 @@ export default function LoginForm() {
             navigate("/today")
         })
 
-        promise.catch(err => alert(err.response.data.message))
+        promise.catch(err => {
+            alert(err.response.data.message)
+            setIsLoading(false)
+        })
     }
 
-    return (
+    return !isLoading ? (
         <Form onSubmit={logIn}>
-            <input disabled={isDisable} name="email" value={form.email} onChange={handleForm} placeholder="Email" type="email" />
-            <input disabled={isDisable} name="password" value={form.password} onChange={handleForm} placeholder="Password" type="password" />
+            <input name="email" value={form.email} onChange={handleForm} placeholder="Email" type="email" />
+            <input name="password" value={form.password} onChange={handleForm} placeholder="Password" type="password" />
             <button type="submit">Log in</button>
+        </Form>
+    ) : (
+        <Form>
+            <input disabled name="email" value={form.email} placeholder="Email" type="email" />
+            <input disabled name="password" value={form.password} placeholder="Password" type="password" />
+            <button className="load-button">
+                <ThreeDots className="loader" color="#FFFFFF" height={50} width={50} />
+            </button>
         </Form>
     )
 }
@@ -48,7 +62,7 @@ const Form = styled.form`
     align-items: flex-start;
     margin-top: 35px;
     input {
-        background-color: ${(props) => props.disabled === true ? "#DCDCDC" : "#FFFFFF"};
+        background-color: #FFFFFF;
         width: 305px;
         height: 45px;
         margin-bottom: 10px;
@@ -76,5 +90,10 @@ const Form = styled.form`
         text-align: center;
         color: #FFFFFF;
         box-sizing: border-box;
+    }
+    .load-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 `

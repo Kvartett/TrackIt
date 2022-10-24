@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { BASE_URL } from "../../constants/urls"
 
-
 export default function TodayPage() {
     const { user, config, percentage, setPercentage } = useAuth()
     const navigate = useNavigate()
@@ -43,8 +42,6 @@ export default function TodayPage() {
     function reloadTodayHabits() {
         getTodayHabits()
     }
-
-
 
     function checkPercentage() {
         const totalHabitsToday = todayHabits.length

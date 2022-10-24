@@ -11,6 +11,7 @@ import Habits from "./Habits"
 
 export default function HabitsPage() {
     const [habits, setHabits] = useState(undefined)
+    const [isLoading, setIsLoading] = useState(false)
     const { config, user } = useAuth()
     const navigate = useNavigate()
 
@@ -23,9 +24,16 @@ export default function HabitsPage() {
     }, [])
 
     function getHabits() {
+        setIsLoading(true)
         axios.get(`${BASE_URL}/habits`, config)
-            .then(res => setHabits(res.data))
-            .catch(err => alert(err.response.data.message))
+            .then(res => {
+                setHabits(res.data)
+                setIsLoading(false)
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+                setIsLoading(false)
+            })
     }
 
     function reloadHabits() {
@@ -36,7 +44,7 @@ export default function HabitsPage() {
         <>
             <NavBar />
             <ContentContainer>
-                <AddHabits reloadHabits={reloadHabits} />
+                <AddHabits reloadHabits={reloadHabits} isLoading={isLoading} setIsLoading={setIsLoading} />
                 <Habits reloadHabits={reloadHabits} habits={habits} setHabits={setHabits} />
             </ContentContainer>
             <Footer />
