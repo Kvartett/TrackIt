@@ -84,6 +84,10 @@ const ButtonsContainer = styled.div`
     align-items: center;
     margin-top: 10px;
     button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
         width: 30px;
         height: 30px;
         border: 1px solid #D5D5D5;
